@@ -970,17 +970,10 @@ endif
 
 ifdef CONFIG_LTO_CLANG
 ifdef CONFIG_LTO_CLANG_THIN
-CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
+CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit -fvisibility=default
 KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
 else
-CC_FLAGS_LTO	:= -flto
-endif
-
-ifeq ($(SRCARCH),x86)
-# Workaround for compiler / linker bug
-CC_FLAGS_LTO	+= -fvisibility=hidden
-else
-CC_FLAGS_LTO	+= -fvisibility=default
+CC_FLAGS_LTO	:= -flto -fvisibility=hidden
 endif
 
 # Limit inlining across translation units to reduce binary size
