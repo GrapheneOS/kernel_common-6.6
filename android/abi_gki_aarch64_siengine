@@ -1688,7 +1688,6 @@
   uart_insert_char
   uart_parse_options
   uart_set_options
-  uart_try_toggle_sysrq
   uart_update_timeout
   uart_write_wakeup
   __udelay
