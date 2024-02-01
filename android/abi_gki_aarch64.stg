@@ -424288,15 +424288,6 @@ elf_symbol {
   full_name: "uart_suspend_port"
 }
 elf_symbol {
-  id: 0xb55e05eb
-  name: "uart_try_toggle_sysrq"
-  is_defined: true
-  symbol_type: FUNCTION
-  crc: 0x5abf25af
-  type_id: 0xfe2ccfd3
-  full_name: "uart_try_toggle_sysrq"
-}
-elf_symbol {
   id: 0xa60def42
   name: "uart_unregister_driver"
   is_defined: true
