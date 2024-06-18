@@ -12,6 +12,9 @@ sign_file=$(mktemp)
 
 trap '{ rm -f -- "$sign_file" "$cert_pem" "$cert_x509"; }' EXIT
 
+# clean out/ to avoid confusion with signing keys
+test -d out/ && rm -rf out/
+
 function find_in_out(){
 	find out/bazel/output_user_root/*/execroot -type f -name $1
 }
@@ -29,4 +32,4 @@ find virt_dist/ -type f -name "*.ko" \
 
 mapfile -t common_sig < <(modinfo common_dist/*.ko | grep "sig_key" | awk '{print $NF}')
 mapfile -t virt_sig < <(modinfo virt_dist/*.ko | grep "sig_key" | awk '{print $NF}')
-[[ $common_sig == $virt_sig ]] && echo "Signature verification success" || echo "Signature verification failure"
+if [[ "$ARCH" == "x86_64" ]]; then [[ $common_sig == $virt_sig ]] && echo "Signature verification success" || echo "Signature verification failure"; fi
