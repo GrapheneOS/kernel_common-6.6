@@ -31,10 +31,10 @@ for file in $(find ${GKI_PREBUILT_PATH} -maxdepth 1 -type f -printf "%f\n"); do
         cp "$@" common_dist/$file ${GKI_PREBUILT_PATH}/$file > /dev/null 2>&1
 done
 cp "$@" common_dist/${kernel_image_src} ${COMMON_PREBUILT_PATH}/${kernel_image_dst}
-test -d lib && rm -r lib
-bsdtar xvf common_dist/system_dlkm_staging_archive.tar.gz >/dev/null 2>&1
-rm -r ${COMMON_PREBUILT_PATH}/system_dlkm_staging/lib
-cp -a "$@" lib ${COMMON_PREBUILT_PATH}/system_dlkm_staging
+#test -d lib && rm -r lib
+#bsdtar xvf common_dist/system_dlkm_staging_archive.tar.gz >/dev/null 2>&1
+#rm -r ${COMMON_PREBUILT_PATH}/system_dlkm_staging/modules
+#cp -a "$@" lib/modules ${COMMON_PREBUILT_PATH}/system_dlkm_staging/modules
 cp "$@" virt_dist/{mac80211,cfg80211}.ko ${COMMON_PREBUILT_PATH}
 for file in $(find ${VIRT_PREBUILT_PATH} -maxdepth 1 -type f -printf "%f\n"); do
         cp "$@" virt_dist/$file ${VIRT_PREBUILT_PATH}/$file
