@@ -109,6 +109,7 @@ _X86_GKI_MODULES_LIST = [
 _X86_64_GKI_MODULES_LIST = [
     # keep sorted
     "drivers/ptp/ptp_kvm.ko",
+    "net/tipc/tipc.ko",
 ]
 
 # buildifier: disable=unnamed-macro
