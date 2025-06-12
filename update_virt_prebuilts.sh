@@ -20,11 +20,15 @@ fi
 
 test -d "$ANDROID_BUILD_TOP" || (echo "ANDROID_BUILD_TOP is undefined or missing" && exit 1)
 
-COMMON_PREBUILT_PATH="$ANDROID_BUILD_TOP/kernel/prebuilts/${KERNEL_VERSION}/${ARCH}"
-VIRT_PREBUILT_PATH="$ANDROID_BUILD_TOP/kernel/prebuilts/common-modules/virtual-device/${KERNEL_VERSION}/${ARCH/_/-}"
+COMMON_PREBUILT_PATH="$ANDROID_BUILD_TOP/prebuilts/qemu-kernel/${ARCH}/${KERNEL_VERSION}"
+GKI_PREBUILT_PATH="$COMMON_PREBUILT_PATH/gki_modules"
+VIRT_PREBUILT_PATH="$COMMON_PREBUILT_PATH/goldfish_modules"
 
 for file in $(find ${COMMON_PREBUILT_PATH} -maxdepth 1 -type f -printf "%f\n"); do
         cp "$@" common_dist/$file ${COMMON_PREBUILT_PATH}/$file > /dev/null 2>&1
+done
+for file in $(find ${GKI_PREBUILT_PATH} -maxdepth 1 -type f -printf "%f\n"); do
+        cp "$@" common_dist/$file ${GKI_PREBUILT_PATH}/$file > /dev/null 2>&1
 done
 cp "$@" common_dist/${kernel_image_src} ${COMMON_PREBUILT_PATH}/${kernel_image_dst}
 test -d lib && rm -r lib
