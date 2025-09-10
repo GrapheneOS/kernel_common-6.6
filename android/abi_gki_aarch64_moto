@@ -336,7 +336,6 @@
   refcount_warn_saturate
   __register_blkdev
   __register_chrdev
-  register_memory_notifier
   register_netdev
   register_reboot_notifier
   register_restart_handler
@@ -535,7 +534,6 @@
   unregister_blkdev
   __unregister_chrdev
   unregister_chrdev_region
-  unregister_memory_notifier
   unregister_netdev
   unregister_reboot_notifier
   unregister_restart_handler
