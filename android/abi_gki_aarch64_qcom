@@ -3,7 +3,6 @@
   activate_task
   add_cpu
   add_device_randomness
-  add_memory
   add_timer
   add_uevent_var
   add_wait_queue
@@ -1153,7 +1152,6 @@
   __memcpy_toio
   memdup_user
   memmove
-  memory_block_size_bytes
   memory_read_from_buffer
   memparse
   mempool_alloc
@@ -1616,7 +1614,6 @@
   register_inet6addr_notifier
   register_inetaddr_notifier
   register_kretprobe
-  register_memory_notifier
   register_module_notifier
   register_netdevice
   register_netdevice_notifier
