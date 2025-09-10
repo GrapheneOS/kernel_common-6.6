@@ -548,7 +548,6 @@
   __udp6_lib_lookup
   udp_table
   unlock_rename
-  unregister_memory_notifier
   unregister_net_sysctl_table
   unregister_sysctl_table
   unregister_tcf_proto_ops
