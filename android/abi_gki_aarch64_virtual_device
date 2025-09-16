@@ -344,6 +344,7 @@
   _raw_spin_unlock_irqrestore
   __rcu_read_lock
   __rcu_read_unlock
+  random_kmalloc_seed
   refcount_warn_saturate
   register_netdevice
   register_netdevice_notifier
