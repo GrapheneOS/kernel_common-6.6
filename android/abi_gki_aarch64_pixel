@@ -437,6 +437,7 @@
   devm_clk_bulk_get_optional
   devm_clk_get
   devm_clk_get_optional
+  devm_clk_get_optional_enabled
   devm_clk_hw_register
   devm_clk_put
   devm_devfreq_add_device
@@ -584,6 +585,7 @@
   dev_set_name
   dev_vprintk_emit
   _dev_warn
+  dget_parent
   disable_irq
   disable_irq_nosync
   disable_percpu_irq
@@ -1809,6 +1811,7 @@
   param_set_int
   param_set_uint
   param_set_uint_minmax
+  path_put
   pci_alloc_irq_vectors
   pci_alloc_irq_vectors_affinity
   pci_assign_resource
@@ -2042,6 +2045,7 @@
   radix_tree_lookup
   radix_tree_next_chunk
   raise_softirq
+  random_kmalloc_seed
   ___ratelimit
   raw_notifier_call_chain
   raw_notifier_chain_register
@@ -2590,6 +2594,7 @@
   tcpm_sourcing_vbus
   tcpm_tcpc_reset
   tcpm_unregister_port
+  tcpm_update_sink_capabilities
   tcpm_vbus_change
   teo_cpu_get_util_threshold
   teo_cpu_set_util_threshold

@@ -383,10 +383,6 @@ slhc_init
 slhc_remember
 slhc_toss
 slhc_uncompress
-tipc_dump_done
-tipc_dump_start
-tipc_nl_sk_walk
-tipc_sk_fill_sock_diag
 unregister_candev
 unregister_pppox_proto
 usb_serial_claim_interface
