@@ -849,6 +849,19 @@ DECLARE_HOOK(android_vh_has_unmovable_pages_bypass,
 DECLARE_HOOK(android_vh_alloc_contig_range_skip_lru,
 	TP_PROTO(unsigned long start_pfn, unsigned long end_pfn, int migratetype, gfp_t gfp_mask, bool *skip_lru_cache),
 	TP_ARGS(start_pfn, end_pfn, migratetype, gfp_mask, skip_lru_cache));
+DECLARE_HOOK(android_vh_migration_entry_wait_enter,
+	TP_PROTO(swp_entry_t entry, u64 *time, int *zonenum),
+	TP_ARGS(entry, time, zonenum));
+DECLARE_HOOK(android_vh_migration_entry_wait_exit,
+	TP_PROTO(u64 time, int zonenum),
+	TP_ARGS(time, zonenum));
+DECLARE_HOOK(android_vh_migrate_pages_batch_break,
+	TP_PROTO(struct folio *folio, struct list_head *head,
+	int reason, bool *should_break, int *nr_left),
+	TP_ARGS(folio, head, reason, should_break, nr_left));
+DECLARE_HOOK(android_vh_migrate_batch_nr_pages,
+	TP_PROTO(struct list_head *head, int *nr_pages),
+	TP_ARGS(head, nr_pages));
 #endif /* _TRACE_HOOK_MM_H */
 
 /* This part must be outside protection */
