@@ -714,12 +714,6 @@ static int usb_gadget_connect_locked(struct usb_gadget *gadget)
 		goto out;
 	}
 
-	if (deny_new_usb) {
-		dev_err(&gadget->dev, "blocked USB gadget connection\n");
-		ret = -EPERM;
-		goto out;
-	}
-
 	if (gadget->deactivated || !gadget->udc->allow_connect || !gadget->udc->started) {
 		/*
 		 * If the gadget isn't usable (because it is deactivated,
