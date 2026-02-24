@@ -839,6 +839,10 @@ DECLARE_HOOK(android_vh_swap_device_swapon,
 	DECLARE_HOOK(android_vh_swap_device_swapoff,
 	TP_PROTO(struct swap_info_struct *si),
 	TP_ARGS(si));
+
+DECLARE_HOOK(android_vh_has_unmovable_pages_bypass,
+	TP_PROTO(unsigned long start_pfn, unsigned long end_pfn, int migratetype, bool *bypass),
+	TP_ARGS(start_pfn, end_pfn, migratetype, bypass));
 #endif /* _TRACE_HOOK_MM_H */
 
 /* This part must be outside protection */
