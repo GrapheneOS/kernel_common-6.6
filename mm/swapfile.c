@@ -1311,6 +1311,7 @@ start_over:
 	plist_for_each_entry_safe(si, next, &swap_avail_heads[node], avail_lists[node]) {
 
 		trace_android_vh_get_swap_pages_bypass(si, entry_order, &skip_swap);
+		trace_android_rvh_get_swap_pages_bypass(si, entry_order, &skip_swap, swp_entries);
 		if (skip_swap)
 			continue;
 
@@ -1608,6 +1609,7 @@ static void swap_entry_range_free(struct swap_info_struct *p, swp_entry_t entry,
 	unsigned char *map = p->swap_map + offset;
 	unsigned char *map_end = map + nr_pages;
 	struct swap_cluster_info *ci;
+	trace_android_vh_check_swap_entry_range_free(p, &entry, nr_pages);
 
 	ci = lock_cluster(p, offset);
 	do {
@@ -2850,6 +2852,7 @@ SYSCALL_DEFINE1(swapoff, const char __user *, specialfile)
 	set_current_oom_origin();
 	err = try_to_unuse(p->type);
 	clear_current_oom_origin();
+	trace_android_vh_swap_device_swapoff(p);
 
 	if (err) {
 		/* re-insert swap space back into swap_list */
@@ -3643,6 +3646,7 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 	mutex_unlock(&swapon_mutex);
 	atomic_inc(&proc_poll_event);
 	wake_up_interruptible(&proc_poll_wait);
+	trace_android_vh_swap_device_swapon(p);
 
 	error = 0;
 	goto out;
