@@ -349,7 +349,7 @@ static int __reclaim_dying_guest_page_call(u64 pfn, u64 gfn, u8 order, void *arg
 static void __pkvm_destroy_hyp_vm(struct kvm *host_kvm)
 {
 	struct kvm_pinned_page *tmp, *ppage;
-	struct mm_struct *mm = current->mm;
+	struct mm_struct *mm = host_kvm->mm;
 	struct kvm_vcpu *host_vcpu;
 	unsigned long idx;
 
@@ -562,7 +562,7 @@ device_initcall_sync(finalize_pkvm);
 
 void pkvm_host_reclaim_page(struct kvm *host_kvm, phys_addr_t ipa)
 {
-	struct mm_struct *mm = current->mm;
+	struct mm_struct *mm = host_kvm->mm;
 	struct kvm_pinned_page *ppage;
 	u16 pins;
 
