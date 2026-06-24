@@ -6703,6 +6703,7 @@ static int selinux_setprocattr(const char *name, void *value, size_t size)
 		}
 
 		if (context_type != selinux_state.types.zygote &&
+			context_type != selinux_state.types.zygote_next &&
 			context_type != selinux_state.types.webview_zygote
 		) {
 			pr_err("selinux_flags: attempt to set from an unknown context, pid %i\n", current->pid);
