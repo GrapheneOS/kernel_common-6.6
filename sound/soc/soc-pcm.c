@@ -26,6 +26,9 @@
 #include <sound/soc-link.h>
 #include <sound/initval.h>
 
+#undef CREATE_TRACE_POINTS
+#include <trace/hooks/sound.h>
+
 #define soc_pcm_ret(rtd, ret) _soc_pcm_ret(rtd, __func__, ret)
 static inline int _soc_pcm_ret(struct snd_soc_pcm_runtime *rtd,
 			       const char *func, int ret)
@@ -2902,6 +2905,7 @@ static int soc_get_playback_capture(struct snd_soc_pcm_runtime *rtd,
 	if (dai_link->capture_only)
 		has_playback = 0;
 
+	trace_android_vh_snd_get_play_cap(rtd, &has_playback, &has_capture);
 	if (!has_playback && !has_capture) {
 		dev_err(rtd->dev, "substream %s has no playback, no capture\n",
 			dai_link->stream_name);
