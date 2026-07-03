@@ -364631,6 +364631,33 @@ elf_symbol {
   full_name: "__phy_modify"
 }
 elf_symbol {
+  id: 0x780e6c81
+  name: "__phy_modify_mmd"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0xd20e62a2
+  type_id: 0x9071eb2d
+  full_name: "__phy_modify_mmd"
+}
+elf_symbol {
+  id: 0xb2d5c21d
+  name: "__phy_read_mmd"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x856480e2
+  type_id: 0x90738a48
+  full_name: "__phy_read_mmd"
+}
+elf_symbol {
+  id: 0x1f108f7f
+  name: "__phy_write_mmd"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x2b2b63c3
+  type_id: 0x9071cf7e
+  full_name: "__phy_write_mmd"
+}
+elf_symbol {
   id: 0xd9bec400
   name: "__pkvm_load_el2_module"
   is_defined: true
@@ -403781,6 +403808,15 @@ elf_symbol {
   full_name: "genphy_c45_pma_read_abilities"
 }
 elf_symbol {
+  id: 0x96b85248
+  name: "genphy_c45_pma_resume"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x8c01ce83
+  type_id: 0x91dd4b0e
+  full_name: "genphy_c45_pma_resume"
+}
+elf_symbol {
   id: 0xd99708c7
   name: "genphy_c45_pma_setup_forced"
   is_defined: true
@@ -403788,6 +403824,15 @@ elf_symbol {
   crc: 0x314e63c3
   type_id: 0x91dd4b0e
   full_name: "genphy_c45_pma_setup_forced"
+}
+elf_symbol {
+  id: 0x35c6801f
+  name: "genphy_c45_pma_suspend"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0xb1284a05
+  type_id: 0x91dd4b0e
+  full_name: "genphy_c45_pma_suspend"
 }
 elf_symbol {
   id: 0x8dcdde77
@@ -413586,6 +413631,15 @@ elf_symbol {
   full_name: "mdiobus_alloc_size"
 }
 elf_symbol {
+  id: 0x78469c04
+  name: "mdiobus_c45_modify"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0xeba1dc98
+  type_id: 0x9173ee51
+  full_name: "mdiobus_c45_modify"
+}
+elf_symbol {
   id: 0x9743346a
   name: "mdiobus_c45_modify_changed"
   is_defined: true
@@ -421367,6 +421421,15 @@ elf_symbol {
   crc: 0x50e6dad7
   type_id: 0x91dd4b0e
   full_name: "phy_reset_after_clk_enable"
+}
+elf_symbol {
+  id: 0x8fff831c
+  name: "phy_resolve_aneg_linkmode"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x8c43818f
+  type_id: 0x1cc5f9b2
+  full_name: "phy_resolve_aneg_linkmode"
 }
 elf_symbol {
   id: 0x61290d1f
@@ -447507,6 +447570,9 @@ interface {
   symbol_id: 0xf7e48028
   symbol_id: 0x34126b3d
   symbol_id: 0x28bdd181
+  symbol_id: 0x780e6c81
+  symbol_id: 0xb2d5c21d
+  symbol_id: 0x1f108f7f
   symbol_id: 0xd9bec400
   symbol_id: 0xb35f76db
   symbol_id: 0xed5a2777
@@ -451852,7 +451918,9 @@ interface {
   symbol_id: 0x084b19b7
   symbol_id: 0x607c937c
   symbol_id: 0xb0dc66ba
+  symbol_id: 0x96b85248
   symbol_id: 0xd99708c7
+  symbol_id: 0x35c6801f
   symbol_id: 0x8dcdde77
   symbol_id: 0xa3a0e5a9
   symbol_id: 0xd9482d31
@@ -452938,6 +453006,7 @@ interface {
   symbol_id: 0x08abb636
   symbol_id: 0xe93a46f5
   symbol_id: 0x97be343f
+  symbol_id: 0x78469c04
   symbol_id: 0x9743346a
   symbol_id: 0x80374a08
   symbol_id: 0x5ab31615
@@ -453802,6 +453871,7 @@ interface {
   symbol_id: 0x6e21f792
   symbol_id: 0x4e868331
   symbol_id: 0xd306839f
+  symbol_id: 0x8fff831c
   symbol_id: 0x61290d1f
   symbol_id: 0x509ad286
   symbol_id: 0x409cd326
