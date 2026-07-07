@@ -629,6 +629,7 @@ int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
 		return ret;
 	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
 }
+EXPORT_SYMBOL_GPL(vmap_pages_range_noflush);
 
 /**
  * vmap_pages_range - map pages to a kernel virtual address
@@ -2663,6 +2664,7 @@ struct vm_struct *__get_vm_area_caller(unsigned long size, unsigned long flags,
 	return __get_vm_area_node(size, 1, PAGE_SHIFT, flags, start, end,
 				  NUMA_NO_NODE, GFP_KERNEL, caller);
 }
+EXPORT_SYMBOL_GPL(__get_vm_area_caller);
 
 /**
  * get_vm_area - reserve a contiguous kernel virtual area
