@@ -229,6 +229,8 @@ static inline void task_unlock(struct task_struct *p)
 	spin_unlock(&p->alloc_lock);
 }
 
+DEFINE_GUARD(task_lock, struct task_struct *, task_lock(_T), task_unlock(_T))
+
 #ifdef CONFIG_GKI_DYNAMIC_TASK_STRUCT_SIZE
 static inline void *android_task_vendor_data(struct task_struct *p)
 {

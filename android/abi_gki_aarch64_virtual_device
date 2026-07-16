@@ -1211,6 +1211,7 @@
   __tracepoint_dma_fence_emit
   video_firmware_drivers_only
   vmemdup_user
+  ww_mutex_lock
   ww_mutex_lock_interruptible
   ww_mutex_unlock
 
