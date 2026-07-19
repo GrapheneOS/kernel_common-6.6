@@ -6515,6 +6515,7 @@ static int selinux_getprocattr(struct task_struct *p,
 {
 	const struct task_security_struct *__tsec;
 	u32 sid;
+    u32 context_type;
 	u64 flags;
 	int error;
 	unsigned len;
@@ -6531,9 +6532,10 @@ static int selinux_getprocattr(struct task_struct *p,
 
 	if (!strcmp(name, "current"))
 		sid = __tsec->sid;
-	else if (!strcmp(name, "prev"))
+	else if (!strcmp(name, "prev")) {
 		sid = __tsec->osid;
-	else if (!strcmp(name, "exec"))
+		flags = __tsec->flags;
+    } else if (!strcmp(name, "exec"))
 		sid = __tsec->exec_sid;
 	else if (!strcmp(name, "fscreate"))
 		sid = __tsec->create_sid;
@@ -6548,6 +6550,19 @@ static int selinux_getprocattr(struct task_struct *p,
 		goto bad;
 	}
 	rcu_read_unlock();
+
+	if (!strcmp(name, "prev") &&
+	    flags & TSEC_FLAG_OVERRIDE_PREV_SELINUX_CTX_TO_INIT &&
+	    security_sid_to_context_type(sid, &context_type) == 0 &&
+	    context_type == selinux_state.types.zygote)
+    {
+		char *res = kstrdup("u:r:init:s0", GFP_KERNEL);
+		if (!res) {
+			return -ENOMEM;
+		}
+		*value = res;
+		return strlen(res) + 1; // NUL terminator is intentionally included
+	}
 
 	if (!strcmp(name, "grapheneos_flags")) {
 		size_t len = 16 + 1;
