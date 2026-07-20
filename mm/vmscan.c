@@ -1580,6 +1580,40 @@ static inline bool is_exec_file_folio(struct folio *folio,
 	return (vm_flags & VM_EXEC) && folio_is_file_lru(folio);
 }
 
+#ifdef CONFIG_LRU_GEN
+
+#define LRU_REFS_FLAGS	(BIT(PG_referenced) | BIT(PG_workingset))
+
+/*
+ * Only used on a mapped page in the eviction (rmap walk) path, where promotion
+ * needs to be done by taking the page off the LRU list and then adding it back
+ * with PG_active set. In contrast, the aging (page table walk) path uses
+ * page_update_gen().
+ */
+static bool lru_gen_set_refs(struct folio *folio, const vm_flags_t vm_flags)
+{
+	/* see the comment on LRU_REFS_FLAGS */
+	if (folio_test_referenced(folio) && !folio_test_workingset(folio)) {
+		/* Activate file-backed executable pages after first usage. */
+		if (is_exec_file_folio(folio, vm_flags)) {
+			set_mask_bits(&folio->flags, LRU_REFS_FLAGS, BIT(PG_workingset));
+			return true;
+		}
+
+		set_mask_bits(&folio->flags, LRU_REFS_MASK, BIT(PG_referenced));
+		return false;
+	}
+
+	set_mask_bits(&folio->flags, LRU_REFS_FLAGS, BIT(PG_workingset));
+	return true;
+}
+#else
+static bool lru_gen_set_refs(struct folio *folio, const vm_flags_t vm_flags)
+{
+	return false;
+}
+#endif /* CONFIG_LRU_GEN */
+
 static enum folio_references folio_check_references(struct folio *folio,
 						  struct scan_control *sc)
 {
@@ -1619,6 +1653,13 @@ static enum folio_references folio_check_references(struct folio *folio,
 	 */
 	if (referenced_ptes == -1)
 		return FOLIOREF_KEEP;
+
+	if (lru_gen_enabled()) {
+		if (!referenced_ptes)
+			return FOLIOREF_RECLAIM;
+
+		return lru_gen_set_refs(folio, vm_flags) ? FOLIOREF_ACTIVATE : FOLIOREF_KEEP;
+	}
 
 	if (referenced_ptes) {
 		/*
@@ -3442,8 +3483,6 @@ static bool should_clear_pmd_young(void)
  *                          shorthand helpers
  ******************************************************************************/
 
-#define LRU_REFS_FLAGS	(BIT(PG_referenced) | BIT(PG_workingset))
-
 #define DEFINE_MAX_SEQ(lruvec)						\
 	unsigned long max_seq = READ_ONCE((lruvec)->lrugen.max_seq)
 
@@ -3960,12 +3999,23 @@ static bool positive_ctrl_err(struct ctrl_pos *sp, struct ctrl_pos *pv)
  ******************************************************************************/
 
 /* promote pages accessed through page tables */
-static int folio_update_gen(struct folio *folio, int gen)
+static int folio_update_gen(struct folio *folio, int gen, const vm_flags_t vm_flags)
 {
 	unsigned long new_flags, old_flags = READ_ONCE(folio->flags);
 
 	VM_WARN_ON_ONCE(gen >= MAX_NR_GENS);
 	VM_WARN_ON_ONCE(!rcu_read_lock_held());
+
+	/*
+	 * See the comment on LRU_REFS_FLAGS, and activate file-backed
+	 * executable pages after first usage to avoid typical IO
+	 * thrashing from reclaiming.
+	 */
+	if (!folio_test_referenced(folio) && !folio_test_workingset(folio) &&
+	    !is_exec_file_folio(folio, vm_flags)) {
+		set_mask_bits(&folio->flags, LRU_REFS_MASK, BIT(PG_referenced));
+		return -1;
+	}
 
 	do {
 		/* lru_gen_del_folio() has isolated this page? */
@@ -4246,7 +4296,7 @@ restart:
 		      !folio_test_swapcache(folio)))
 			folio_mark_dirty(folio);
 
-		old_gen = folio_update_gen(folio, new_gen);
+		old_gen = folio_update_gen(folio, new_gen, args->vma->vm_flags);
 		if (old_gen >= 0 && old_gen != new_gen)
 			update_batch_size(walk, folio, old_gen, new_gen);
 	}
@@ -4326,7 +4376,7 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
 		      !folio_test_swapcache(folio)))
 			folio_mark_dirty(folio);
 
-		old_gen = folio_update_gen(folio, new_gen);
+		old_gen = folio_update_gen(folio, new_gen, vma->vm_flags);
 		if (old_gen >= 0 && old_gen != new_gen)
 			update_batch_size(walk, folio, old_gen, new_gen);
 next:
@@ -4937,7 +4987,7 @@ void lru_gen_look_around(struct page_vma_mapped_walk *pvmw)
 			folio_mark_dirty(folio);
 
 		if (walk) {
-			old_gen = folio_update_gen(folio, new_gen);
+			old_gen = folio_update_gen(folio, new_gen, vma->vm_flags);
 			if (old_gen >= 0 && old_gen != new_gen)
 				update_batch_size(walk, folio, old_gen, new_gen);
 
