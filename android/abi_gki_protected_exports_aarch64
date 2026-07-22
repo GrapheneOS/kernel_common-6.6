@@ -365,6 +365,7 @@ qca_set_bdaddr_rome
 qca_uart_setup
 register_candev
 register_pppox_proto
+renesas_xhci_check_request_fw
 rfkill_alloc
 rfkill_blocked
 rfkill_destroy
