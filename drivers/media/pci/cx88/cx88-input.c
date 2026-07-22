@@ -510,9 +510,8 @@ int cx88_ir_fini(struct cx88_core *core)
 	if (!ir)
 		return 0;
 
-	rc_unregister_device(ir->dev);
 	cx88_ir_stop(core);
-	rc_free_device(ir->dev);
+	rc_unregister_device(ir->dev);
 	kfree(ir);
 
 	/* done */

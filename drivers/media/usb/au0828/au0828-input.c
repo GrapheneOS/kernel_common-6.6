@@ -357,7 +357,6 @@ void au0828_rc_unregister(struct au0828_dev *dev)
 		return;
 
 	rc_unregister_device(ir->rc);
-	rc_free_device(ir->rc);
 
 	/* done */
 	kfree(ir);

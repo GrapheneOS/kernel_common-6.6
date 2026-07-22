@@ -264,7 +264,6 @@ static int __init loop_init(void)
 static void __exit loop_exit(void)
 {
 	rc_unregister_device(loopdev.dev);
-	rc_free_device(loopdev.dev);
 }
 
 module_init(loop_init);
