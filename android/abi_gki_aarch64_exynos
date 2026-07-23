@@ -1062,6 +1062,10 @@
   __traceiter_android_vh_configfs_uevent_work
   __tracepoint_android_vh_configfs_uevent_work
 
+# required by fimc-is.ko
+  __get_vm_area_caller
+  vmap_pages_range_noflush
+
 # required by freq-qos-tracer.ko
   freq_qos_add_request
   freq_qos_remove_request

@@ -332093,6 +332093,15 @@ function {
   parameter_id: 0x18bd6530
 }
 function {
+  id: 0x91b76eb8
+  return_type_id: 0x6720d32f
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x9cf21ab5
+  parameter_id: 0x0b30ee00
+  parameter_id: 0x4585663f
+}
+function {
   id: 0x91b78ec8
   return_type_id: 0x6720d32f
   parameter_id: 0x30ddb79e
@@ -361775,6 +361784,15 @@ function {
   parameter_id: 0x05501385
 }
 function {
+  id: 0xfffb0a36
+  return_type_id: 0x2ee2a594
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x391f15ea
+}
+function {
   id: 0xfffcea5d
   return_type_id: 0x6d7f5ff6
   parameter_id: 0x0562c566
@@ -363518,6 +363536,15 @@ elf_symbol {
   crc: 0xca983fc0
   type_id: 0x9ac6895a
   full_name: "__get_task_ioprio"
+}
+elf_symbol {
+  id: 0xbe82973d
+  name: "__get_vm_area_caller"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0xafc30746
+  type_id: 0xfffb0a36
+  full_name: "__get_vm_area_caller"
 }
 elf_symbol {
   id: 0xea677002
@@ -445646,6 +445673,15 @@ elf_symbol {
   full_name: "vmap"
 }
 elf_symbol {
+  id: 0xf1e4c40a
+  name: "vmap_pages_range_noflush"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0xd95a5594
+  type_id: 0x91b76eb8
+  full_name: "vmap_pages_range_noflush"
+}
+elf_symbol {
   id: 0xdd7d73a5
   name: "vmemdup_user"
   is_defined: true
@@ -447759,6 +447795,7 @@ interface {
   symbol_id: 0x46f82598
   symbol_id: 0x7babe2df
   symbol_id: 0x73476ba5
+  symbol_id: 0xbe82973d
   symbol_id: 0xea677002
   symbol_id: 0x3a5255b8
   symbol_id: 0xa3a6c885
@@ -456873,6 +456910,7 @@ interface {
   symbol_id: 0xa1a341df
   symbol_id: 0xf7787d5c
   symbol_id: 0x8119b492
+  symbol_id: 0xf1e4c40a
   symbol_id: 0xdd7d73a5
   symbol_id: 0xe4441605
   symbol_id: 0x7d46f112
