@@ -345514,6 +345514,25 @@ function {
   parameter_id: 0x33756485
 }
 function {
+  id: 0x9b6f1205
+  return_type_id: 0x6720d32f
+  parameter_id: 0x18bd6530
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x6720d32f
+  parameter_id: 0xf1a6dfed
+  parameter_id: 0x11cfee5a
+}
+function {
+  id: 0x9b6f2a58
+  return_type_id: 0x6720d32f
+  parameter_id: 0x18bd6530
+  parameter_id: 0x33756485
+  parameter_id: 0x33756485
+  parameter_id: 0x6720d32f
+  parameter_id: 0x11cfee5a
+}
+function {
   id: 0x9b6fe394
   return_type_id: 0x6720d32f
   parameter_id: 0x1dce0fdd
@@ -367589,6 +367608,15 @@ elf_symbol {
   full_name: "__traceiter_android_vh_alloc_contig_range_not_isolated"
 }
 elf_symbol {
+  id: 0x40c5aa87
+  name: "__traceiter_android_vh_alloc_contig_range_skip_lru"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x9d85031f
+  type_id: 0x9b6f1205
+  full_name: "__traceiter_android_vh_alloc_contig_range_skip_lru"
+}
+elf_symbol {
   id: 0x666f7184
   name: "__traceiter_android_vh_alloc_flags_cma_adjust"
   is_defined: true
@@ -369765,6 +369793,15 @@ elf_symbol {
   crc: 0xaf71ef88
   type_id: 0x9b563284
   full_name: "__traceiter_android_vh_handle_trylock_failed_folio"
+}
+elf_symbol {
+  id: 0xf29bbc63
+  name: "__traceiter_android_vh_has_unmovable_pages_bypass"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x4ccdf92d
+  type_id: 0x9b6f2a58
+  full_name: "__traceiter_android_vh_has_unmovable_pages_bypass"
 }
 elf_symbol {
   id: 0x2e323991
@@ -375851,6 +375888,15 @@ elf_symbol {
   full_name: "__tracepoint_android_vh_alloc_contig_range_not_isolated"
 }
 elf_symbol {
+  id: 0x1380e565
+  name: "__tracepoint_android_vh_alloc_contig_range_skip_lru"
+  is_defined: true
+  symbol_type: OBJECT
+  crc: 0x5d05d5c2
+  type_id: 0x18ccbd2c
+  full_name: "__tracepoint_android_vh_alloc_contig_range_skip_lru"
+}
+elf_symbol {
   id: 0x74cce3b2
   name: "__tracepoint_android_vh_alloc_flags_cma_adjust"
   is_defined: true
@@ -378027,6 +378073,15 @@ elf_symbol {
   crc: 0x05a30a42
   type_id: 0x18ccbd2c
   full_name: "__tracepoint_android_vh_handle_trylock_failed_folio"
+}
+elf_symbol {
+  id: 0x596c6f79
+  name: "__tracepoint_android_vh_has_unmovable_pages_bypass"
+  is_defined: true
+  symbol_type: OBJECT
+  crc: 0x7b1f23e2
+  type_id: 0x18ccbd2c
+  full_name: "__tracepoint_android_vh_has_unmovable_pages_bypass"
 }
 elf_symbol {
   id: 0xee2c17ff
@@ -448000,6 +448055,7 @@ interface {
   symbol_id: 0xa3ddabd2
   symbol_id: 0xf78be1c5
   symbol_id: 0xa6133b26
+  symbol_id: 0x40c5aa87
   symbol_id: 0x666f7184
   symbol_id: 0xd0b4a794
   symbol_id: 0x3e1edf55
@@ -448242,6 +448298,7 @@ interface {
   symbol_id: 0x47a1ebbd
   symbol_id: 0xda69352c
   symbol_id: 0x2b2d07aa
+  symbol_id: 0xf29bbc63
   symbol_id: 0x2e323991
   symbol_id: 0x3d32611b
   symbol_id: 0xa8439430
@@ -448918,6 +448975,7 @@ interface {
   symbol_id: 0x3a519484
   symbol_id: 0x7ea1f05b
   symbol_id: 0xd85e5644
+  symbol_id: 0x1380e565
   symbol_id: 0x74cce3b2
   symbol_id: 0xd7f9868e
   symbol_id: 0x83f9aaa7
@@ -449160,6 +449218,7 @@ interface {
   symbol_id: 0x209f19bb
   symbol_id: 0x57e0f806
   symbol_id: 0x90e3616c
+  symbol_id: 0x596c6f79
   symbol_id: 0xee2c17ff
   symbol_id: 0xdab6baf5
   symbol_id: 0x4e88b2c2
