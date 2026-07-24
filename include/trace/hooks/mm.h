@@ -679,6 +679,9 @@ DECLARE_HOOK(android_vh_reuse_whole_anon_folio,
 DECLARE_HOOK(android_vh_alloc_swap_slot_cache,
 	TP_PROTO(void *cache),
 	TP_ARGS(cache));
+DECLARE_RESTRICTED_HOOK(android_rvh_alloc_swap_slot_cache,
+	TP_PROTO(void *cache, swp_entry_t *entry, bool *bypass),
+	TP_ARGS(cache, entry, bypass), 1);
 DECLARE_HOOK(android_vh_calculate_totalreserve_pages,
 	TP_PROTO(bool *skip),
 	TP_ARGS(skip));
@@ -823,6 +826,19 @@ DECLARE_HOOK(android_vh_folio_end_writeback,
 DECLARE_HOOK(android_vh_folio_start_writeback,
 	TP_PROTO(struct folio *folio),
 	TP_ARGS(folio));
+DECLARE_HOOK(android_vh_check_swap_entry_range_free,
+	TP_PROTO(struct swap_info_struct *si, swp_entry_t *entry,\
+		 unsigned int nr_pages),
+	TP_ARGS(si, entry, nr_pages));
+DECLARE_HOOK(android_vh_folio_alloc_swap_bypass,
+	TP_PROTO(swp_entry_t *entry, struct folio *folio, bool *bypass),
+	TP_ARGS(entry, folio, bypass));
+DECLARE_HOOK(android_vh_swap_device_swapon,
+	TP_PROTO(struct swap_info_struct *si),
+	TP_ARGS(si));
+	DECLARE_HOOK(android_vh_swap_device_swapoff,
+	TP_PROTO(struct swap_info_struct *si),
+	TP_ARGS(si));
 #endif /* _TRACE_HOOK_MM_H */
 
 /* This part must be outside protection */

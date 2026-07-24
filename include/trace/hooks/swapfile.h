@@ -13,6 +13,9 @@
 DECLARE_HOOK(android_vh_get_swap_pages_bypass,
 	TP_PROTO(struct swap_info_struct *si, int entry_order, bool *skip),
 	TP_ARGS(si, entry_order, skip));
+DECLARE_RESTRICTED_HOOK(android_rvh_get_swap_pages_bypass,
+	TP_PROTO(struct swap_info_struct *si, int entry_order, bool *skip, swp_entry_t *entry),
+	TP_ARGS(si, entry_order, skip, entry), 3);
 
 #endif /* _TRACE_HOOK_SWAPFILE_H */
 /* This part must be outside protection */

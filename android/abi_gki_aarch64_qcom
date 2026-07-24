@@ -734,6 +734,8 @@
   geni_se_tx_dma_unprep
   genlmsg_multicast_allns
   genlmsg_put
+  genphy_c45_pma_resume
+  genphy_c45_pma_suspend
   genl_register_family
   genl_unregister_family
   gen_pool_add_owner
@@ -1143,6 +1145,7 @@
   mbox_free_channel
   mbox_request_channel
   mbox_send_message
+  mdiobus_c45_modify
   media_device_cleanup
   media_device_init
   __media_device_register
@@ -1425,6 +1428,9 @@
   pci_write_config_dword
   pcpu_nr_pages
   __per_cpu_offset
+  __phy_modify_mmd
+  __phy_read_mmd
+  __phy_write_mmd
   per_cpu_ptr_to_phys
   perf_aux_output_begin
   perf_aux_output_end
@@ -1450,6 +1456,7 @@
   phy_mac_interrupt
   phy_power_off
   phy_power_on
+  phy_resolve_aneg_linkmode
   phy_restart_aneg
   phy_set_mode_ext
   pick_highest_pushable_task
@@ -2149,6 +2156,7 @@
   __traceiter_android_vh_ufs_update_sdev
   __traceiter_android_vh_update_topology_flags_workfn
   __traceiter_android_vh_f2fs_ioc_set_pin_file
+  __traceiter_android_vh_snd_get_play_cap
   __traceiter_cpu_frequency_limits
   __traceiter_ipi_entry
   __traceiter_ipi_raise
@@ -2257,6 +2265,7 @@
   __tracepoint_android_vh_ufs_update_sdev
   __tracepoint_android_vh_update_topology_flags_workfn
   __tracepoint_android_vh_f2fs_ioc_set_pin_file
+  __tracepoint_android_vh_snd_get_play_cap
   __tracepoint_cpu_frequency_limits
   __tracepoint_ipi_entry
   __tracepoint_ipi_raise

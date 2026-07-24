@@ -85,6 +85,7 @@
 #include <trace/events/android_vendor_lmk.h>
 #include <trace/hooks/swapfile.h>
 #include <trace/hooks/rcu.h>
+#include <trace/hooks/sound.h>
 
 /*
  * Export tracepoints that act as a bare tracehook (ie: have no trace event
@@ -241,6 +242,7 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_record_mutex_lock_starttime);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_record_rtmutex_lock_starttime);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_record_rwsem_lock_starttime);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_record_pcpu_rwsem_starttime);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_record_pcpu_rwsem_rdheld_starttime);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_free_mod_mem);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_set_mod_perm_after_init);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_set_mod_perm_before_init);
@@ -786,3 +788,14 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_mm_try_split_folio_bypass);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_rvh_do_swap_page_relax);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_rvh_do_swap_page_start);
 EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_do_swap_page_done);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_check_swap_entry_range_free);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_folio_alloc_swap_bypass);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_swap_device_swapon);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_swap_device_swapoff);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_rvh_alloc_swap_slot_cache);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_rvh_get_swap_pages_bypass);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_snd_get_play_cap);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_mmc_blk_reset);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_mmc_attach_sd);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_sdhci_get_cd);
+EXPORT_TRACEPOINT_SYMBOL_GPL(android_vh_mmc_gpio_cd_irqt);

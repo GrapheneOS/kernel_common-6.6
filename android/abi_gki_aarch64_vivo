@@ -84,6 +84,7 @@
   tcf_classify
   timer_reduce
   __traceiter_android_rvh_alloc_and_link_pwqs
+  __traceiter_android_rvh_alloc_swap_slot_cache
   __traceiter_android_rvh_bpf_skb_load_bytes
   __traceiter_android_rvh_balance_fair
   __traceiter_android_rvh_before_pick_task_fair
@@ -92,6 +93,7 @@
   __traceiter_android_rvh_create_worker
   __traceiter_android_rvh_dequeue_task_fair
   __traceiter_android_rvh_enqueue_task_fair
+  __traceiter_android_rvh_get_swap_pages_bypass
   __traceiter_android_rvh_inet_sock_create
   __traceiter_android_rvh_inet_sock_release
   __traceiter_android_rvh_kswapd_shrink_node_bypass
@@ -135,6 +137,7 @@
   __traceiter_android_vh_cpuset_css_online
   __traceiter_android_vh_check_folio_look_around_ref
   __traceiter_android_vh_check_nanosleep_syscall
+  __traceiter_android_vh_check_swap_entry_range_free
   __traceiter_android_vh_clear_rwsem_reader_owned
   __traceiter_android_vh_clear_rwsem_writer_owned
   __traceiter_android_vh_configfs_uevent_work
@@ -154,6 +157,7 @@
   __traceiter_android_vh_filemap_fault_post_folio_locked
   __traceiter_android_vh_filemap_read_end
   __traceiter_android_vh_filemap_update_page
+  __traceiter_android_vh_folio_alloc_swap_bypass
   __traceiter_android_vh_force_page_cache_ra
   __traceiter_android_vh_free_unref_page_list_bypass
   __traceiter_android_vh_free_task
@@ -219,6 +223,8 @@
   __traceiter_android_vh_sk_alloc
   __traceiter_android_vh_sk_free
   __traceiter_android_vh_spec_promote_folio
+  __traceiter_android_vh_swap_device_swapoff
+  __traceiter_android_vh_swap_device_swapon
   __traceiter_android_vh_swapmem_gather_add_bypass
   __traceiter_android_vh_swapmem_gather_finish
   __traceiter_android_vh_swapmem_gather_init
@@ -247,6 +253,7 @@
   __traceiter_workqueue_execute_end
   __traceiter_workqueue_execute_start
   __tracepoint_android_rvh_alloc_and_link_pwqs
+  __tracepoint_android_rvh_alloc_swap_slot_cache
   __tracepoint_android_rvh_bpf_skb_load_bytes
   __tracepoint_android_rvh_balance_fair
   __tracepoint_android_rvh_before_pick_task_fair
@@ -255,6 +262,7 @@
   __tracepoint_android_rvh_create_worker
   __tracepoint_android_rvh_dequeue_task_fair
   __tracepoint_android_rvh_enqueue_task_fair
+  __tracepoint_android_rvh_get_swap_pages_bypass
   __tracepoint_android_rvh_inet_sock_create
   __tracepoint_android_rvh_inet_sock_release
   __tracepoint_android_rvh_kswapd_shrink_node_bypass
@@ -298,6 +306,7 @@
   __tracepoint_android_vh_cpuset_css_online
   __tracepoint_android_vh_check_folio_look_around_ref
   __tracepoint_android_vh_check_nanosleep_syscall
+  __tracepoint_android_vh_check_swap_entry_range_free
   __tracepoint_android_vh_clear_rwsem_reader_owned
   __tracepoint_android_vh_clear_rwsem_writer_owned
   __tracepoint_android_vh_configfs_uevent_work
@@ -317,6 +326,7 @@
   __tracepoint_android_vh_filemap_fault_post_folio_locked
   __tracepoint_android_vh_filemap_read_end
   __tracepoint_android_vh_filemap_update_page
+  __tracepoint_android_vh_folio_alloc_swap_bypass
   __tracepoint_android_vh_force_page_cache_ra
   __tracepoint_android_vh_free_task
   __tracepoint_android_vh_free_unref_page_bypass
@@ -382,6 +392,8 @@
   __tracepoint_android_vh_sk_alloc
   __tracepoint_android_vh_sk_free
   __tracepoint_android_vh_spec_promote_folio
+  __tracepoint_android_vh_swap_device_swapoff
+  __tracepoint_android_vh_swap_device_swapon
   __tracepoint_android_vh_swapmem_gather_add_bypass
   __tracepoint_android_vh_swapmem_gather_finish
   __tracepoint_android_vh_swapmem_gather_init

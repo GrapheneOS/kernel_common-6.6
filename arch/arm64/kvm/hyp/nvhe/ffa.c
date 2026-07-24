@@ -310,7 +310,7 @@ static u32 __ffa_host_share_ranges(struct ffa_mem_region_addr_range *ranges,
 		u64 sz = (u64)range->pg_cnt * FFA_PAGE_SIZE;
 		u64 pfn = hyp_phys_to_pfn(range->address);
 
-		if (!PAGE_ALIGNED(sz))
+		if (!PAGE_ALIGNED(sz | range->address))
 			break;
 
 		if (__pkvm_host_share_ffa(pfn, sz / PAGE_SIZE))
@@ -330,7 +330,7 @@ static u32 __ffa_host_unshare_ranges(struct ffa_mem_region_addr_range *ranges,
 		u64 sz = (u64)range->pg_cnt * FFA_PAGE_SIZE;
 		u64 pfn = hyp_phys_to_pfn(range->address);
 
-		if (!PAGE_ALIGNED(sz))
+		if (!PAGE_ALIGNED(sz | range->address))
 			break;
 
 		if (__pkvm_host_unshare_ffa(pfn, sz / PAGE_SIZE))
@@ -439,6 +439,7 @@ static void __do_ffa_mem_xfer(const u64 func_id,
 	struct ffa_mem_region *buf;
 	u32 offset, nr_ranges, checked_offset, em_mem_access_off;
 	int ret = 0;
+	size_t mem_region_len = FFA_MEM_REGION_SZ(hyp_ffa_version);
 
 	if (addr_mbz || npages_mbz || fraglen > len ||
 	    fraglen > KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE) {
@@ -446,8 +447,7 @@ static void __do_ffa_mem_xfer(const u64 func_id,
 		goto out;
 	}
 
-	if (fraglen < sizeof(struct ffa_mem_region) +
-		      sizeof(struct ffa_mem_region_attributes)) {
+	if (fraglen < mem_region_len + sizeof(struct ffa_mem_region_attributes)) {
 		ret = FFA_RET_INVALID_PARAMETERS;
 		goto out;
 	}
@@ -467,9 +467,8 @@ static void __do_ffa_mem_xfer(const u64 func_id,
 	memcpy(buf, host_buffers.tx, fraglen);
 
 	em_mem_access_off = ffa_mem_desc_offset(buf, 0, hyp_ffa_version);
-	if (em_mem_access_off >
-	    KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE - sizeof(struct ffa_mem_region_attributes)) {
-		ret = FFA_RET_INVALID_PARAMETERS;
+	if ((u64)em_mem_access_off + sizeof(struct ffa_mem_region_attributes) > fraglen) {
+		ffa_to_smccc_error(res, FFA_RET_INVALID_PARAMETERS);
 		goto out_unlock;
 	}
 
@@ -564,9 +563,9 @@ static void do_ffa_mem_reclaim(struct arm_smccc_res *res,
 	fraglen = res->a2;
 
 	em_mem_access_off = ffa_mem_desc_offset(buf, 0, hyp_ffa_version);
-	if (em_mem_access_off >
-	    KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE - sizeof(struct ffa_mem_region_attributes)) {
+	if ((u64)em_mem_access_off + sizeof(struct ffa_mem_region_attributes) > fraglen) {
 		ret = FFA_RET_INVALID_PARAMETERS;
+		ffa_rx_release(res);
 		goto out_unlock;
 	}
 
@@ -577,8 +576,8 @@ static void do_ffa_mem_reclaim(struct arm_smccc_res *res,
 	 * check that we end up with something that doesn't look _completely_
 	 * bogus.
 	 */
-	if (WARN_ON(offset > len ||
-		    fraglen > KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE)) {
+	if (offset + CONSTITUENTS_OFFSET(0) > len ||
+	    fraglen > KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE) {
 		ret = FFA_RET_ABORTED;
 		ffa_rx_release(res);
 		goto out_unlock;
@@ -611,6 +610,11 @@ static void do_ffa_mem_reclaim(struct arm_smccc_res *res,
 		goto out_unlock;
 
 	reg = (void *)buf + offset;
+	if (offset + CONSTITUENTS_OFFSET(reg->addr_range_cnt) > len) {
+		ret = FFA_RET_ABORTED;
+		goto out_unlock;
+	}
+
 	/* If the SPMD was happy, then we should be too. */
 	WARN_ON(ffa_host_unshare_ranges(reg->constituents,
 					reg->addr_range_cnt));
@@ -812,7 +816,7 @@ bool kvm_host_ffa_handler(struct kvm_cpu_context *ctxt, u32 func_id)
 	DECLARE_REG(u64, arg2, ctxt, 2);
 	DECLARE_REG(u64, arg3, ctxt, 3);
 	DECLARE_REG(u64, arg4, ctxt, 4);
-	struct arm_smccc_res res;
+	struct arm_smccc_res res = {0};
 	bool handled = true;
 	int err = 0;
 

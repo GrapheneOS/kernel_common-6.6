@@ -171,6 +171,9 @@ DECLARE_HOOK(android_vh_record_rwsem_lock_starttime,
 DECLARE_HOOK(android_vh_record_pcpu_rwsem_starttime,
 	TP_PROTO(struct percpu_rw_semaphore *sem, unsigned long settime_jiffies),
 	TP_ARGS(sem, settime_jiffies));
+DECLARE_HOOK(android_vh_record_pcpu_rwsem_rdheld_starttime,
+	TP_PROTO(struct percpu_rw_semaphore *sem, unsigned long settime_jiffies),
+	TP_ARGS(sem, settime_jiffies));
 
 DECLARE_HOOK(android_vh_read_lazy_flag,
 	TP_PROTO(int *thread_lazy_flag, unsigned long *thread_flags),

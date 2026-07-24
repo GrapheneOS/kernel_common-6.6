@@ -409,6 +409,39 @@ static int __test_loads(struct __test_metadata *_metadata,
 	EXPECT_EQ(ret, 0)
 		return ret;
 
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size / 2, 0, self->page_size / 2);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/* Test tiny read at random offsets. */
+	ret = load_and_cmp(_metadata, self, wrapfd, 100, 0, 50);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/* Cross a page boundary in the file and then in the buffer. */
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size - 1, 0, self->page_size);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	ret = load_and_cmp(_metadata, self, wrapfd, 0, self->page_size - 1, self->page_size);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/*
+	 * Start bounce buffer, large O_DIRECT read and memmove() logic along with end bounce
+	 * buffer.
+	 */
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size / 2, self->page_size / 4,
+			   self->page_size * 3);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/* Test logic for fitting everything within the first bounce page. */
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size / 2, self->page_size / 2,
+			   self->page_size / 2);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
 	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size, self->page_size,
 			   self->size - self->page_size);
 	EXPECT_EQ(ret, 0)
@@ -417,8 +450,6 @@ static int __test_loads(struct __test_metadata *_metadata,
 	/* Save this one for last since subsequent tests run comparisons on the entire buffer. */
 	ret = load_and_cmp(_metadata, self, wrapfd, 0, 0, self->size);
 	EXPECT_EQ(ret, 0);
-
-	/* TODO: test more load offsets */
 
 	return ret;
 }
