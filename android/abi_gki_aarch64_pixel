@@ -2131,6 +2131,7 @@
   _raw_write_lock_bh
   _raw_write_lock_irq
   _raw_write_lock_irqsave
+  _raw_write_trylock
   _raw_write_unlock
   _raw_write_unlock_bh
   _raw_write_unlock_irq
