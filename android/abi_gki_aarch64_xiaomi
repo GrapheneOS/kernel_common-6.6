@@ -232,6 +232,12 @@
   blkcg_activate_policy
   blkcg_deactivate_policy
 
+#required by iostat.ko
+  __traceiter_android_vh_erofs_iostat_submit
+  __traceiter_android_vh_erofs_iostat_update
+  __tracepoint_android_vh_erofs_iostat_submit
+  __tracepoint_android_vh_erofs_iostat_update
+
 #required by cifs.ko
   add_swap_extent
   asn1_ber_decoder
