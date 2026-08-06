@@ -372676,6 +372676,15 @@ elf_symbol {
   full_name: "__traceiter_android_vh_try_fixup_sea"
 }
 elf_symbol {
+  id: 0x5077741e
+  name: "__traceiter_android_vh_try_to_freeze_abort"
+  is_defined: true
+  symbol_type: FUNCTION
+  crc: 0x46c6c732
+  type_id: 0x9ab9affb
+  full_name: "__traceiter_android_vh_try_to_freeze_abort"
+}
+elf_symbol {
   id: 0x2bc25325
   name: "__traceiter_android_vh_try_to_freeze_todo"
   is_defined: true
@@ -380999,6 +381008,15 @@ elf_symbol {
   crc: 0x742bd80d
   type_id: 0x18ccbd2c
   full_name: "__tracepoint_android_vh_try_fixup_sea"
+}
+elf_symbol {
+  id: 0x0bc2efcc
+  name: "__tracepoint_android_vh_try_to_freeze_abort"
+  is_defined: true
+  symbol_type: OBJECT
+  crc: 0x9d87d045
+  type_id: 0x18ccbd2c
+  full_name: "__tracepoint_android_vh_try_to_freeze_abort"
 }
 elf_symbol {
   id: 0xd9d2bcff
@@ -448758,6 +448776,7 @@ interface {
   symbol_id: 0xfeff2e7f
   symbol_id: 0x641d703d
   symbol_id: 0xeac5f4dd
+  symbol_id: 0x5077741e
   symbol_id: 0x2bc25325
   symbol_id: 0xd8abda6b
   symbol_id: 0x0119fc41
@@ -449683,6 +449702,7 @@ interface {
   symbol_id: 0x69721329
   symbol_id: 0x2df766e3
   symbol_id: 0x0896a337
+  symbol_id: 0x0bc2efcc
   symbol_id: 0xd9d2bcff
   symbol_id: 0x8d5e4915
   symbol_id: 0x09ba106b

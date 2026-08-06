@@ -701,4 +701,6 @@ __tracepoint_android_vh_migration_entry_wait_exit
 __tracepoint_android_vh_migrate_pages_batch_break
 __tracepoint_android_vh_migrate_batch_nr_pages
 
-
+# required by mi-power.ko
+__traceiter_android_vh_try_to_freeze_abort
+__tracepoint_android_vh_try_to_freeze_abort
