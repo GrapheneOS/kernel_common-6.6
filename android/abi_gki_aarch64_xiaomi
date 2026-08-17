@@ -237,6 +237,10 @@
   __traceiter_android_vh_erofs_iostat_update
   __tracepoint_android_vh_erofs_iostat_submit
   __tracepoint_android_vh_erofs_iostat_update
+  __traceiter_android_vh_f2fs_iostat_submit
+  __traceiter_android_vh_f2fs_iostat_update
+  __tracepoint_android_vh_f2fs_iostat_submit
+  __tracepoint_android_vh_f2fs_iostat_update
 
 #required by cifs.ko
   add_swap_extent
