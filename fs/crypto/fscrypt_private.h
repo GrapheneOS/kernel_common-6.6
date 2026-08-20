@@ -644,7 +644,11 @@ struct fscrypt_master_key {
 	 *
 	 * Locking: protected by ->mk_sem.
 	 */
+#ifdef __GENKSYMS__
+	struct key		*mk_users;
+#else
 	struct list_head	mk_users;
+#endif
 
 	/*
 	 * List of inodes that were unlocked using this key.  This allows the
@@ -668,7 +672,13 @@ struct fscrypt_master_key {
 	 * fscrypt_mode_key_setup_mutex synchronizes appends, and searches use
 	 * the RCU read lock together with ->mk_sem held for read.
 	 */
+#ifdef __GENKSYMS__
+	struct fscrypt_prepared_key mk_direct_keys[FSCRYPT_MODE_MAX + 1];
+	struct fscrypt_prepared_key mk_iv_ino_lblk_64_keys[FSCRYPT_MODE_MAX + 1];
+	struct fscrypt_prepared_key mk_iv_ino_lblk_32_keys[FSCRYPT_MODE_MAX + 1];
+#else
 	struct list_head	mk_mode_keys;
+#endif
 
 	/* Hash key for inode numbers.  Initialized only when needed. */
 	siphash_key_t		mk_ino_hash_key;
