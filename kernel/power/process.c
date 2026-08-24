@@ -91,6 +91,8 @@ static int try_to_freeze_tasks(bool user_only)
 	if (wakeup) {
 		pr_err("Freezing %s aborted after %d.%03d seconds\n", what,
 		       elapsed_msecs / 1000, elapsed_msecs % 1000);
+
+		trace_android_vh_try_to_freeze_abort(elapsed_msecs);
 	} else if (todo) {
 		pr_err("Freezing %s failed after %d.%03d seconds "
 		       "(%d tasks refusing to freeze, wq_busy=%d):\n", what,

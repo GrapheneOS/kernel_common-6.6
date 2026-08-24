@@ -40,6 +40,7 @@
 #include <linux/blk-mq.h>
 #include <linux/delay.h>
 #include <linux/mm.h>
+#include <linux/page_size_compat.h>
 #include <asm/page.h>
 #include <linux/task_work.h>
 #include <linux/namei.h>
@@ -572,7 +573,7 @@ static int ublk_validate_params(const struct ublk_device *ub)
 	if (ub->params.types & UBLK_PARAM_TYPE_BASIC) {
 		const struct ublk_param_basic *p = &ub->params.basic;
 
-		if (p->logical_bs_shift > PAGE_SHIFT || p->logical_bs_shift < 9)
+		if (p->logical_bs_shift > __PAGE_SHIFT || p->logical_bs_shift < 9)
 			return -EINVAL;
 
 		if (p->logical_bs_shift > p->physical_bs_shift)
@@ -715,7 +716,7 @@ static inline char *ublk_queue_cmd_buf(struct ublk_device *ub, int q_id)
 
 static inline int __ublk_queue_cmd_buf_size(int depth)
 {
-	return round_up(depth * sizeof(struct ublksrv_io_desc), PAGE_SIZE);
+	return round_up(depth * sizeof(struct ublksrv_io_desc), __PAGE_SIZE);
 }
 
 static inline int ublk_queue_cmd_buf_size(struct ublk_device *ub, int q_id)
@@ -2181,13 +2182,13 @@ static void ublk_stop_work_fn(struct work_struct *work)
 	ublk_stop_dev(ub);
 }
 
-/* align max io buffer size with PAGE_SIZE */
+/* align max io buffer size with __PAGE_SIZE */
 static void ublk_align_max_io_size(struct ublk_device *ub)
 {
 	unsigned int max_io_bytes = ub->dev_info.max_io_buf_bytes;
 
 	ub->dev_info.max_io_buf_bytes =
-		round_down(max_io_bytes, PAGE_SIZE);
+		round_down(max_io_bytes, __PAGE_SIZE);
 }
 
 static int ublk_add_tag_set(struct ublk_device *ub)

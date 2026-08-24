@@ -109,6 +109,7 @@
   cdev_device_add
   cdev_device_del
   cdev_init
+  cec_s_conn_info
   cgroup_path_ns
   cgroup_taskset_first
   cgroup_taskset_next

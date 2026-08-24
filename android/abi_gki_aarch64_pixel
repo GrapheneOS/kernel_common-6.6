@@ -2131,6 +2131,7 @@
   _raw_write_lock_bh
   _raw_write_lock_irq
   _raw_write_lock_irqsave
+  _raw_write_trylock
   _raw_write_unlock
   _raw_write_unlock_bh
   _raw_write_unlock_irq
@@ -2783,6 +2784,7 @@
   __traceiter_android_vh_kvmalloc_node_use_vmalloc
   __traceiter_android_vh_mm_compaction_begin
   __traceiter_android_vh_mm_compaction_end
+  __traceiter_android_vh_mm_customize_longterm_pinnable
   __traceiter_android_vh_mm_kcompactd_cpu_online
   __traceiter_android_vh_post_alloc_hook
   __traceiter_android_vh_prio_inheritance
@@ -2940,6 +2942,7 @@
   __tracepoint_android_vh_kvmalloc_node_use_vmalloc
   __tracepoint_android_vh_mm_compaction_begin
   __tracepoint_android_vh_mm_compaction_end
+  __tracepoint_android_vh_mm_customize_longterm_pinnable
   __tracepoint_android_vh_mm_kcompactd_cpu_online
   __tracepoint_android_vh_post_alloc_hook
   __tracepoint_android_vh_prio_inheritance

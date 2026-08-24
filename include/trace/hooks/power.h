@@ -16,6 +16,10 @@ DECLARE_HOOK(android_vh_try_to_freeze_todo_logging,
 	TP_PROTO(bool *logging_on),
 	TP_ARGS(logging_on));
 
+DECLARE_HOOK(android_vh_try_to_freeze_abort,
+	TP_PROTO(unsigned int elapsed_msecs),
+	TP_ARGS(elapsed_msecs));
+
 DECLARE_HOOK(android_vh_try_to_freeze_todo_unfrozen,
 	TP_PROTO(struct task_struct *p),
 	TP_ARGS(p));

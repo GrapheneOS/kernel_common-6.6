@@ -709,6 +709,8 @@ void page_cache_sync_ra(struct readahead_control *ractl,
 {
 	bool do_forced_ra = ractl->file && (ractl->file->f_mode & FMODE_RANDOM);
 
+	trace_android_vh_page_cache_read(ractl->mapping->host,
+			readahead_index(ractl), req_count);
 	/*
 	 * Even if readahead is disabled, issue this request as readahead
 	 * as we'll need it to satisfy the requested range. The forced
@@ -735,6 +737,8 @@ EXPORT_SYMBOL_GPL(page_cache_sync_ra);
 void page_cache_async_ra(struct readahead_control *ractl,
 		struct folio *folio, unsigned long req_count)
 {
+	trace_android_vh_page_cache_read(ractl->mapping->host,
+			readahead_index(ractl), req_count);
 	/* no readahead */
 	if (!ractl->ra->ra_pages)
 		return;

@@ -11,6 +11,7 @@
 #include <linux/page_owner.h>
 #include <linux/page_pinner.h>
 #include <linux/migrate.h>
+#include <trace/hooks/mm.h>
 #include "internal.h"
 
 #define CREATE_TRACE_POINTS
@@ -37,9 +38,14 @@ static struct page *has_unmovable_pages(unsigned long start_pfn, unsigned long e
 	struct page *page = pfn_to_page(start_pfn);
 	struct zone *zone = page_zone(page);
 	unsigned long pfn;
+	bool bypass = false;
 
 	VM_BUG_ON(pageblock_start_pfn(start_pfn) !=
 		  pageblock_start_pfn(end_pfn - 1));
+
+	trace_android_vh_has_unmovable_pages_bypass(start_pfn, end_pfn, migratetype, &bypass);
+	if (bypass)
+		return NULL;
 
 	if (is_migrate_cma_page(page)) {
 		/*
