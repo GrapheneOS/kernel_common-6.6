@@ -1104,6 +1104,7 @@
   __mmap_lock_do_trace_acquire_returned
   __mmap_lock_do_trace_released
   __mmap_lock_do_trace_start_locking
+  mtree_load
   of_reserved_mem_device_init_by_idx
   __traceiter_mmap_lock_acquire_returned
   __traceiter_mmap_lock_released
