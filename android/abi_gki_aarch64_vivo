@@ -61,6 +61,7 @@
   sbitmap_init_node
   sbitmap_queue_clear
   __sbitmap_queue_get
+  sbitmap_queue_get_shallow
   sbitmap_queue_init_node
   sbitmap_queue_min_shallow_depth
   sbitmap_queue_resize

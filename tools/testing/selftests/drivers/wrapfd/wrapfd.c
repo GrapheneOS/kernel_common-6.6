@@ -162,7 +162,30 @@ FIXTURE(wrapfd_tests)
 	int fd;
 };
 
-#define FILE_SZ_PAGES	100
+static size_t get_file_size(size_t page_size)
+{
+	size_t min_req_size = 100 * page_size - page_size / 2;
+	FILE *min_req_size_fp;
+
+	min_req_size_fp = fopen("/sys/module/wrapfd/parameters/min_bytes_per_req", "r");
+	if (!min_req_size_fp)
+		return min_req_size;
+
+	if (fscanf(min_req_size_fp, "%zu\n", &min_req_size) != 1)
+		goto out;
+
+	/*
+	 * Intentionally make the file size large enough so that the driver divides loads into
+	 * multiple requests, and make the file size page unaligned if necessary.
+	 */
+	min_req_size *= 3;
+	if (IS_ALIGNED(min_req_size, page_size))
+		min_req_size -= page_size / 2;
+
+out:
+	fclose(min_req_size_fp);
+	return min_req_size;
+}
 
 FIXTURE_SETUP(wrapfd_tests)
 {
@@ -176,8 +199,7 @@ FIXTURE_SETUP(wrapfd_tests)
 		SKIP(return, "Skipping all tests; kernel lacks wrapfd support");
 
 	self->page_size = (size_t)sysconf(_SC_PAGESIZE);
-	/* Intentionally make the file size page unaligned */
-	self->size = self->page_size * FILE_SZ_PAGES - self->page_size / 2;
+	self->size = get_file_size(self->page_size);
 
 	self->dev_fd = open("/dev/wrapfd", O_RDONLY);
 	ASSERT_TRUE(self->dev_fd >= 0);
@@ -444,6 +466,25 @@ static int __test_loads(struct __test_metadata *_metadata,
 
 	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size, self->page_size,
 			   self->size - self->page_size);
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/*
+	 * Test logic to use a bounce buffer at the start and end with a large enough request
+	 * that gets split into multiple sub-requests.
+	 */
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size / 2, self->page_size / 2,
+			   self->size - (self->page_size / 2));
+	EXPECT_EQ(ret, 0)
+		return ret;
+
+	/*
+	 * Test logic to use a bounce buffer at the start and end with 2 bounce buffers at the end.
+	 *
+	 * 2 bounce buffers get allocated because after accounting for the start buffer, the
+	 * remaining length to be copied at the proper offset crosses a page boundary.
+	 */
+	ret = load_and_cmp(_metadata, self, wrapfd, self->page_size - 1, 0, self->page_size + 4);
 	EXPECT_EQ(ret, 0)
 		return ret;
 

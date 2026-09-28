@@ -411,6 +411,9 @@ int kvm_iommu_free_domain(pkvm_handle_t domain_id)
 	int ret = 0;
 	struct kvm_hyp_iommu_domain *domain;
 
+	if (domain_id == KVM_IOMMU_DOMAIN_IDMAP_ID)
+		return -EINVAL;
+
 	domain = handle_to_domain(domain_id);
 	if (!domain)
 		return -EINVAL;

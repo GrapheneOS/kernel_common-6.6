@@ -149,8 +149,10 @@ int main(int argc, char **argv)
 			drain_openssl_errors();
 		else
 			ERR(1, "ENGINE_init");
+#ifdef USE_PKCS11_ENGINE
 		if (key_pass)
 			ERR(!ENGINE_ctrl_cmd_string(e, "PIN", key_pass, 0), "Set PKCS#11 PIN");
+#endif
 		ENGINE_ctrl_cmd(e, "LOAD_CERT_CTRL", 0, &parms, NULL, 1);
 		ERR(!parms.cert, "Get X.509 from PKCS#11");
 		write_cert(parms.cert);
