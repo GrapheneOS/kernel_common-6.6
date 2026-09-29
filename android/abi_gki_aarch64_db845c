@@ -1983,6 +1983,7 @@
   driver_set_override
   platform_device_add
   platform_device_alloc
+  platform_device_del
   wait_for_completion_interruptible_timeout
 
 # required by slimbus.ko
