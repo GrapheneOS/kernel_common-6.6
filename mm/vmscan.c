@@ -1655,6 +1655,12 @@ static enum folio_references folio_check_references(struct folio *folio,
 		return FOLIOREF_KEEP;
 
 	if (lru_gen_enabled()) {
+#ifdef CONFIG_64BIT
+		if (test_and_clear_bit(PG_oem_reserved_5, folio_flags(folio, 0))) {
+			folio_set_workingset(folio);
+			return FOLIOREF_ACTIVATE;
+		}
+#endif
 		if (!referenced_ptes)
 			return FOLIOREF_RECLAIM;
 
