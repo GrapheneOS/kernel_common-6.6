@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0-only */
+// SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright 2025 Google LLC.
  * Author: Suren Baghdasaryan <surenb@google.com>
