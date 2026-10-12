@@ -147,6 +147,7 @@ filegroup(
         "android/abi_gki_aarch64_xiaomi",
         "android/abi_gki_aarch64_xiaomi_wear",
         "android/abi_gki_aarch64_xiaomi_xring",
+        "android/abi_gki_aarch64_zebra",
     ],
     visibility = ["//visibility:public"],
 )
