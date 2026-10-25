@@ -328,6 +328,13 @@ int gzvm_vm_ioctl_create_vcpu(struct gzvm *gzvm, u32 cpuid)
 	vcpu->vcpuid = cpuid;
 	vcpu->gzvm = gzvm;
 	mutex_init(&vcpu->lock);
+	gzvm_vtimer_init(vcpu);
+
+	mutex_lock(&gzvm->lock);
+	if (gzvm->vcpus[cpuid]) {
+		ret = -EEXIST;
+		goto free_vcpu_run;
+	}
 
 	ret = gzvm_arch_create_vcpu(gzvm->vm_id, vcpu->vcpuid, vcpu->run);
 	if (ret < 0)
@@ -339,13 +346,15 @@ int gzvm_vm_ioctl_create_vcpu(struct gzvm *gzvm, u32 cpuid)
 	if (ret < 0)
 		goto put_vm;
 	gzvm->vcpus[cpuid] = vcpu;
+	mutex_unlock(&gzvm->lock);
 
-	gzvm_vtimer_init(vcpu);
 	return ret;
 
 put_vm:
 	gzvm_vm_put(gzvm);
+	gzvm_arch_destroy_vcpu(gzvm->vm_id, vcpu->vcpuid);
 free_vcpu_run:
+	mutex_unlock(&gzvm->lock);
 	free_pages_exact(vcpu->run, GZVM_VCPU_RUN_MAP_SIZE);
 free_vcpu:
 	kfree(vcpu);

@@ -69,6 +69,10 @@
   __traceiter_rpm_return_int
   __tracepoint_rpm_return_int
   __kfifo_len_r
+  sk_net_refcnt_upgrade
+  __d_drop
+  d_delete
+  refcount_dec_and_lock
   mempool_init
   mempool_exit
   dm_register_target
