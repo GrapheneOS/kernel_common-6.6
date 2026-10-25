@@ -4072,13 +4072,27 @@ void kmem_cache_free_bulk(struct kmem_cache *s, size_t size, void **p)
 }
 EXPORT_SYMBOL(kmem_cache_free_bulk);
 
+/* Free checks for the active canary, so the error path needs this too. */
+static inline void activate_canaries_bulk(struct kmem_cache *s, int size,
+					  void **p)
+{
+	int k;
+
+	for (k = 0; k < size; k++) {
+		if (!is_kfence_address(p[k])) {
+			check_canary(s, p[k], s->random_inactive);
+			set_canary(s, p[k], s->random_active);
+		}
+	}
+}
+
 #ifndef CONFIG_SLUB_TINY
 static inline int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
 			size_t size, void **p, struct obj_cgroup *objcg)
 {
 	struct kmem_cache_cpu *c;
 	unsigned long irqflags;
-	int i, k;
+	int i;
 
 	/*
 	 * Drain objects in the per cpu slab, while disabling local
@@ -4133,17 +4147,13 @@ static inline int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
 	local_unlock_irqrestore(&s->cpu_slab->lock, irqflags);
 	slub_put_cpu_ptr(s->cpu_slab);
 
-	for (k = 0; k < i; k++) {
-		if (!is_kfence_address(p[k])) {
-			check_canary(s, p[k], s->random_inactive);
-			set_canary(s, p[k], s->random_active);
-		}
-	}
+	activate_canaries_bulk(s, i, p);
 
 	return i;
 
 error:
 	slub_put_cpu_ptr(s->cpu_slab);
+	activate_canaries_bulk(s, i, p);
 	slab_post_alloc_hook(s, objcg, flags, i, p, false, s->object_size);
 	kmem_cache_free_bulk(s, i, p);
 	return 0;
